@@ -1,3 +1,5 @@
+SHELL := /bin/bash
+
 build:
 	docker build -t mo-petfinder:latest -f Dockerfile .
 
