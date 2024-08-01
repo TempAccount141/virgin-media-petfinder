@@ -37,7 +37,7 @@ def preprocess(df: pd.DataFrame, read_encoder_mappings:bool =True) -> pd.DataFra
     columns = ['Type', 'Breed1', 'Gender', 'Color1', 'Color2', 'MaturitySize', 'FurLength', 'Vaccinated', 'Sterilized', 'Health', 'Adopted']
 
     if read_encoder_mappings:
-        with open('artifacts/encoder_mappings.pkl', 'r') as em_file:
+        with open('artifacts/encoder_mappings.json', 'r') as em_file:
             encoder_mappings = json.load(em_file)
         for col in columns: df[col] = df[col].map(encoder_mappings[col])
     else: 
@@ -50,7 +50,7 @@ def preprocess(df: pd.DataFrame, read_encoder_mappings:bool =True) -> pd.DataFra
         if not os.path.exists('artifacts'):
             os.mkdir('artifacts')
 
-        with open('artifacts/encoder_mappings.pkl', 'w') as em_file:
+        with open('artifacts/encoder_mappings.json', 'w') as em_file:
             json.dump(encoder_mappings, em_file, indent=4)
 
     df['Age'] = np.log1p(df['Age'])
