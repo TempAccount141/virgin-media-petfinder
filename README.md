@@ -30,3 +30,6 @@ run the following command for inference (Task 2):
 ```bash
 python run.py --infer
 ```
+
+------
+Mo
