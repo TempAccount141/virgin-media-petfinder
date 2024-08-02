@@ -5,6 +5,10 @@ The dataset suffers from class imbalance and sever feature skewness, I tried per
 
 ## Want to run it on Docker?
 
+```bash
+make build
+```
+
 run the following command for training (Task 1):
 ```bash
 make train
