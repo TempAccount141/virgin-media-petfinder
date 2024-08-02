@@ -1,6 +1,7 @@
 # Virgin Media Petfinder:
 
-some of the experiments are shown in experimenting.ipynb.
+Some of the experiments are shown in experimenting.ipynb.
+The dataset suffers from class imbalance and sever feature skewness, I tried performing multiple transformations to the features to reduce the impact of their skewed distribution, due to class imbalance i supply class weights to the models.
 
 ## Want to run it on Docker?
 
