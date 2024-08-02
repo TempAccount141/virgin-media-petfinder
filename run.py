@@ -134,9 +134,21 @@ def infer_catboost(df: pd.DataFrame, df_raw: pd.DataFrame) -> None:
                 'Health', 'Fee', 'PhotoAmt', 'Adopted', 'Adopted_prediction']
     df_raw = df_raw[columns]
 
-    if not os.path.exists('output'):
-        os.mkdir('output')
-    df_raw.to_csv('output/results.csv')
+    return df_raw
+
+def test_correct_predictions():
+    values = [[0.0, 1.38, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 0.0],
+            [0.0, 1.79, 0.93, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 2.0, 1.0]]
+    raw_values = [['Cat', 3, 'Tabby', 'Male', 'Black', 'White', 'Small', 'Short', 'No', 'No', 'Healthy', 100, 1, 'Yes'],
+                ['Cat', 5, 'Domestic Short Hair', 'Male', 'Black', 'White', 'Medium', 'Short', 'No', 'No', 'Healthy', 30, 4, 'No']]
+    columns = ['Type', 'Age', 'Breed1', 'Gender', 'Color1', 'Color2', 'MaturitySize',
+               'FurLength', 'Vaccinated', 'Sterilized', 'Health', 'Fee', 'PhotoAmt',
+              'Adopted']
+    df = pd.DataFrame(values, columns=columns)
+    df_raw = pd.DataFrame(raw_values, columns=columns)
+    df_results = df_raw.copy()
+    df_results['Adopted_prediction'] = ['Yes','No']
+    pd.testing.assert_frame_equal(infer_catboost(df, df_raw), df_results)
 
 
 if __name__ == '__main__':
@@ -154,7 +166,11 @@ if __name__ == '__main__':
         model.save_model('artifacts/model')
         print("The model is saved!")
     elif args.infer:
+        test_correct_predictions()
         df_raw = pull_data()
         df = preprocess(df_raw.copy(), read_encoder_mappings=True)
-        infer_catboost(df, df_raw)
+        df_results = infer_catboost(df, df_raw)
+        if not os.path.exists('output'):
+            os.mkdir('output')
+        df_results.to_csv('output/results.csv')
         print("The results are saved!")
