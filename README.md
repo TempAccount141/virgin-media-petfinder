@@ -1,5 +1,7 @@
 # Virgin Media Petfinder:
 
+some of the experiments are shown in experimenting.ipynb.
+
 ## Want to run it on Docker?
 
 run the following command for training (Task 1):
